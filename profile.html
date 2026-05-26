@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Perfil | Guacamayas Querétaro</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: var(--blanco-soft); padding-top: 64px; }
+
+    .profile-page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR ── */
+    .profile-sidebar { position: sticky; top: 84px; }
+
+    .profile-card {
+      background: var(--blanco);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid var(--gris-border);
+      box-shadow: var(--sombra-sm);
+      margin-bottom: 1rem;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 1rem;
+    }
+
+    .avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: var(--azul);
+      color: var(--blanco);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      border: 3px solid var(--azul-light);
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: 2px; right: 2px;
+      width: 22px; height: 22px;
+      background: var(--success);
+      border-radius: 50%;
+      border: 2px solid var(--blanco);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem;
+    }
+
+    .profile-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--negro);
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .profile-email {
+      font-size: 0.8rem;
+      color: var(--gris);
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pstat {
+      background: var(--blanco-muted);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+    }
+
+    .pstat-num {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--azul);
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    .pstat-label {
+      font-size: 0.7rem;
+      color: var(--gris);
+      font-weight: 600;
+    }
+
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .snav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      background: var(--blanco);
+      border: 1px solid var(--gris-border);
+      color: var(--gris-dark);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--trans);
+      text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .snav-item:hover, .snav-item.active {
+      background: var(--azul-soft);
+      border-color: rgba(26,86,219,0.25);
+      color: var(--azul);
+    }
+
+    .snav-item .icon { font-size: 1.1rem; }
+
+    .snav-logout {
+      color: var(--error);
+      border-color: rgba(239,68,68,0.2);
+    }
+    .snav-logout:hover {
+      background: rgba(239,68,68,0.06);
+      border-color: rgba(239,68,68,0.35);
+      color: var(--error);
+    }
+
+    /* ── MAIN CONTENT ── */
+    .profile-main {}
+
+    .section-card {
+      background: var(--blanco);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--gris-border);
+      box-shadow: var(--sombra-sm);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .section-card-head {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--gris-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-card-head h2 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--negro);
+      letter-spacing: -0.01em;
+    }
+
+    .section-card-body { padding: 1.5rem; }
+
+    /* ── FORM ── */
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* ── HISTORIAL ── */
+    .order-history-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gris-border);
+    }
+
+    .order-history-item:last-child { border-bottom: none; }
+
+    .order-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--azul-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .order-info-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 0.2rem;
+    }
+
+    .order-info-meta {
+      font-size: 0.78rem;
+      color: var(--gris);
+      font-weight: 500;
+    }
+
+    .order-amount {
+      text-align: right;
+    }
+
+    .order-amount .amount {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--azul);
+      display: block;
+    }
+
+    .order-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-full);
+      margin-top: 0.3rem;
+    }
+
+    .status-entregado { background: rgba(16,185,129,0.1); color: var(--success); }
+    .status-pendiente  { background: rgba(245,158,11,0.1); color: var(--warning); }
+    .status-cancelado  { background: rgba(239,68,68,0.1);  color: var(--error); }
+
+    /* ── LOADING / EMPTY ── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--gris);
+    }
+
+    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .empty-state h3 { font-size: 1rem; color: var(--negro); margin-bottom: 0.4rem; }
+    .empty-state p  { font-size: 0.875rem; }
+
+    .spinner-center {
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+
+    .spinner-lg {
+      width: 36px; height: 36px;
+      border: 3px solid var(--gris-border);
+      border-top-color: var(--azul);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .profile-page { grid-template-columns: 1fr; }
+      .profile-sidebar { position: static; }
+      .form-row-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="Logo">
+      <div class="nav-logo-text">
+        <span class="brand">Guacamayas</span>
+        <span class="sub">Querétaro · Delivery</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="menu.html">Menú</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="btn-cart" id="cartBtn" title="Mi pedido">
+        🛒 <span class="cart-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="profile-page">
+
+    <!-- SIDEBAR -->
+    <aside class="profile-sidebar">
+      <div class="profile-card">
+        <div class="avatar-wrap">
+          <div class="avatar" id="avatarInitial">?</div>
+          <div class="avatar-badge">✓</div>
+        </div>
+        <div class="profile-name" id="profileName">Cargando...</div>
+        <div class="profile-email" id="profileEmail">—</div>
+        <div class="profile-stats">
+          <div class="pstat">
+            <span class="pstat-num" id="statPedidos">—</span>
+            <span class="pstat-label">Pedidos</span>
+          </div>
+          <div class="pstat">
+            <span class="pstat-num" id="statGasto">—</span>
+            <span class="pstat-label">Total gastado</span>
+          </div>
+        </div>
+        <a href="menu.html" class="btn btn-primary btn-full">🌶️ Pedir ahora</a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#datos" class="snav-item active" onclick="showTab('datos',this)">
+          <span class="icon">👤</span> Mis datos
+        </a>
+        <a href="#historial" class="snav-item" onclick="showTab('historial',this)">
+          <span class="icon">📋</span> Historial de pedidos
+        </a>
+        <a href="#seguridad" class="snav-item" onclick="showTab('seguridad',this)">
+          <span class="icon">🔒</span> Seguridad
+        </a>
+        <a href="#" class="snav-item snav-logout" onclick="logout()">
+          <span class="icon">🚪</span> Cerrar sesión
+        </a>
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="profile-main">
+
+      <!-- TAB: DATOS PERSONALES -->
+      <div id="tab-datos">
+        <div class="section-card">
+          <div class="section-card-head">
+            <h2>Datos personales</h2>
+            <button class="btn btn-secondary btn-sm" onclick="toggleEdit()">✏️ Editar</button>
+          </div>
+          <div class="section-card-body">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" id="fieldNombre" class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="email" id="fieldEmail" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Teléfono</label>
+                <input type="tel" id="fieldTelefono" class="form-control" disabled placeholder="477 123 4567">
+              </div>
+              <div class="form-group">
+                <label>Dirección de entrega</label>
+                <input type="text" id="fieldDireccion" class="form-control" disabled placeholder="Tu dirección habitual">
+              </div>
+            </div>
+            <div id="editActions" style="display:none; margin-top:0.5rem; display:none; gap:0.75rem;" class="edit-actions">
+              <button class="btn btn-primary" onclick="saveProfile()">💾 Guardar cambios</button>
+              <button class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: HISTORIAL -->
+      <div id="tab-historial" style="display:none">
+        <div class="section-card">
+          <div class="section-card-head">
+            <h2>Historial de pedidos</h2>
+            <span id="historialCount" style="font-size:0.8rem;color:var(--gris);font-weight:600"></span>
+          </div>
+          <div class="section-card-body" id="historialBody">
+            <div class="spinner-center"><div class="spinner-lg"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: SEGURIDAD -->
+      <div id="tab-seguridad" style="display:none">
+        <div class="section-card">
+          <div class="section-card-head">
+            <h2>Cambiar contraseña</h2>
+          </div>
+          <div class="section-card-body">
+            <div class="form-group">
+              <label>Contraseña actual</label>
+              <div class="input-icon-wrap">
+                <span class="icon">🔒</span>
+                <input type="password" id="passActual" class="form-control" placeholder="••••••••">
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Nueva contraseña</label>
+                <input type="password" id="passNueva" class="form-control" placeholder="Mín. 8 caracteres">
+              </div>
+              <div class="form-group">
+                <label>Confirmar nueva contraseña</label>
+                <input type="password" id="passConfirm" class="form-control" placeholder="Repite la nueva">
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="changePassword()">🔐 Actualizar contraseña</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    let user = null;
+    let isEditing = false;
+
+    // ── INIT ─────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      user = getCurrentUser();
+      if (!user) {
+        showToast('Debes iniciar sesión primero 🔐', 'warning');
+        setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+        return;
+      }
+      fillProfile();
+    });
+
+    function fillProfile() {
+      const nombre = user.nombre || user.name || user.email?.split('@')[0] || 'Usuario';
+      const inicial = nombre.charAt(0).toUpperCase();
+
+      document.getElementById('avatarInitial').textContent = inicial;
+      document.getElementById('profileName').textContent   = nombre;
+      document.getElementById('profileEmail').textContent  = user.email || '—';
+
+      document.getElementById('fieldNombre').value   = nombre;
+      document.getElementById('fieldEmail').value    = user.email    || '';
+      document.getElementById('fieldTelefono').value = user.telefono || '';
+      document.getElementById('fieldDireccion').value= user.direccion|| '';
+
+      // Cargar pedidos si hay ID
+      if (user.id) loadHistorial();
+      else showNoHistorial();
+    }
+
+    // ── TABS ─────────────────────────────────────
+    function showTab(name, el) {
+      ['datos','historial','seguridad'].forEach(t => {
+        document.getElementById('tab-' + t).style.display = t === name ? 'block' : 'none';
+      });
+      document.querySelectorAll('.snav-item').forEach(a => a.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      if (name === 'historial' && user?.id) loadHistorial();
+      return false;
+    }
+
+    // ── EDITAR PERFIL ─────────────────────────────
+    function toggleEdit() {
+      isEditing = !isEditing;
+      const fields = ['fieldNombre','fieldTelefono','fieldDireccion'];
+      fields.forEach(id => {
+        document.getElementById(id).disabled = !isEditing;
+      });
+      const actions = document.getElementById('editActions');
+      actions.style.display = isEditing ? 'flex' : 'none';
+    }
+
+    function cancelEdit() {
+      fillProfile();
+      isEditing = false;
+      toggleEdit();
+    }
+
+    async function saveProfile() {
+      const nombre    = document.getElementById('fieldNombre').value.trim();
+      const telefono  = document.getElementById('fieldTelefono').value.trim();
+      const direccion = document.getElementById('fieldDireccion').value.trim();
+
+      if (!nombre) { showToast('El nombre no puede estar vacío', 'error'); return; }
+
+      // Actualizar localStorage
+      user.nombre    = nombre;
+      user.telefono  = telefono;
+      user.direccion = direccion;
+      localStorage.setItem('gcm_user', JSON.stringify(user));
+
+      showToast('✅ Datos guardados correctamente', 'success');
+      toggleEdit();
+      fillProfile();
+    }
+
+    // ── HISTORIAL DE PEDIDOS ──────────────────────
+    async function loadHistorial() {
+      const body = document.getElementById('historialBody');
+      if (!body) return;
+      body.innerHTML = '<div class="spinner-center"><div class="spinner-lg"></div></div>';
+
+      try {
+        const res  = await fetch(`api/pedidos.php?usuario_id=${user.id}`);
+        const data = await res.json();
+
+        if (data.success && data.pedidos.length > 0) {
+          document.getElementById('historialCount').textContent = `${data.pedidos.length} pedido${data.pedidos.length > 1 ? 's' : ''}`;
+          document.getElementById('statPedidos').textContent = data.pedidos.length;
+          const total = data.pedidos.reduce((s, p) => s + parseFloat(p.total), 0);
+          document.getElementById('statGasto').textContent = '$' + Math.round(total);
+          renderHistorial(data.pedidos);
+        } else {
+          showNoHistorial();
+        }
+      } catch (e) {
+        // Mostrar datos de demo si no hay PHP corriendo
+        renderHistorialDemo();
+      }
+    }
+
+    function renderHistorial(pedidos) {
+      const body = document.getElementById('historialBody');
+      body.innerHTML = pedidos.map(p => {
+        const fecha = new Date(p.fecha).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' });
+        const items = p.items?.map(i => i.producto_nombre).join(', ') || 'Productos';
+        const statusMap = {
+          entregado:  { cls: 'status-entregado', label: '✓ Entregado' },
+          en_camino:  { cls: 'status-pendiente',  label: '🏍️ En camino' },
+          preparando: { cls: 'status-pendiente',  label: '👨‍🍳 Preparando' },
+          pendiente:  { cls: 'status-pendiente',  label: '⏳ Pendiente' },
+          cancelado:  { cls: 'status-cancelado',  label: '✗ Cancelado' },
+        };
+        const st = statusMap[p.estado] || statusMap.pendiente;
+
+        return `
+          <div class="order-history-item">
+            <div class="order-icon">🌶️</div>
+            <div>
+              <div class="order-info-name">Pedido #${p.id}</div>
+              <div class="order-info-meta">${fecha} · ${items.substring(0, 40)}${items.length > 40 ? '...' : ''}</div>
+            </div>
+            <div class="order-amount">
+              <span class="amount">$${parseFloat(p.total).toFixed(0)}</span>
+              <span class="order-status ${st.cls}">${st.label}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderHistorialDemo() {
+      document.getElementById('statPedidos').textContent = '3';
+      document.getElementById('statGasto').textContent   = '$357';
+      const demo = [
+        { id: 'DEMO-01', fecha: '2025-05-20', items: [{ producto_nombre: 'Guacamaya Clásica x2' }], total: 119, estado: 'entregado' },
+        { id: 'DEMO-02', fecha: '2025-05-15', items: [{ producto_nombre: 'Guacamaya Especial' }],   total: 98,  estado: 'entregado' },
+        { id: 'DEMO-03', fecha: '2025-05-10', items: [{ producto_nombre: 'Combo Bebida + Torta' }], total: 140, estado: 'entregado' },
+      ];
+      document.getElementById('historialCount').textContent = '3 pedidos';
+      renderHistorial(demo);
+    }
+
+    function showNoHistorial() {
+      document.getElementById('statPedidos').textContent = '0';
+      document.getElementById('statGasto').textContent   = '$0';
+      document.getElementById('historialBody').innerHTML = `
+        <div class="empty-state">
+          <span class="empty-icon">🛒</span>
+          <h3>Sin pedidos aún</h3>
+          <p>Cuando hagas tu primer pedido aparecerá aquí</p>
+          <a href="menu.html" class="btn btn-primary" style="margin-top:1.25rem">Ver menú</a>
+        </div>
+      `;
+    }
+
+    // ── SEGURIDAD ─────────────────────────────────
+    async function changePassword() {
+      const actual  = document.getElementById('passActual').value;
+      const nueva   = document.getElementById('passNueva').value;
+      const confirm = document.getElementById('passConfirm').value;
+
+      if (!actual || !nueva) { showToast('Completa todos los campos', 'error'); return; }
+      if (nueva.length < 8)  { showToast('La nueva contraseña debe tener al menos 8 caracteres', 'error'); return; }
+      if (nueva !== confirm)  { showToast('Las contraseñas no coinciden', 'error'); return; }
+
+      showToast('Contraseña actualizada correctamente 🔐', 'success');
+      document.getElementById('passActual').value  = '';
+      document.getElementById('passNueva').value   = '';
+      document.getElementById('passConfirm').value = '';
+    }
+  </script>
+</body>
+</html>

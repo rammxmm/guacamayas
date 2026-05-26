@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seguimiento de Pedido | Guacamayas Querétaro</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: var(--crema); padding-top: 70px; }
+
+    .tracking-page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+
+    .track-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .track-header .order-id {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      color: var(--gris);
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .track-header h1 { font-size: 2.2rem; color: var(--marron); }
+    .track-header h1 span { color: var(--rojo); }
+
+    /* STATUS CARD */
+    .status-card {
+      background: var(--marron);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(176,28,46,0.15);
+    }
+
+    .status-emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: bounce 1s ease infinite alternate;
+    }
+
+    .status-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 0.5rem;
+    }
+
+    .status-title {
+      font-size: 1.6rem;
+      color: var(--blanco);
+      margin-bottom: 1rem;
+    }
+
+    .status-desc {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      max-width: 420px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .eta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 0.6rem 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--blanco);
+    }
+
+    .eta-countdown {
+      color: var(--dorado);
+      font-size: 1.1rem;
+    }
+
+    /* PROGRESS STEPS */
+    .progress-track {
+      background: var(--blanco);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px var(--sombra);
+    }
+
+    .progress-track h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gris);
+      margin-bottom: 1.5rem;
+    }
+
+    .steps-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .timeline-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .timeline-dot {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      transition: var(--trans);
+      background: var(--crema-dark);
+      border: 3px solid transparent;
+    }
+
+    .timeline-dot.done {
+      background: #d4edda;
+      border-color: #2d8a4e;
+    }
+
+    .timeline-dot.active {
+      background: rgba(176,28,46,0.1);
+      border-color: var(--rojo);
+      animation: pulseRing 1.5s ease infinite;
+    }
+
+    .timeline-dot.pending {
+      opacity: 0.4;
+    }
+
+    .timeline-connector {
+      width: 2px;
+      flex: 1;
+      min-height: 30px;
+      background: var(--crema-dark);
+      border-radius: 1px;
+      margin: 4px 0;
+    }
+
+    .timeline-connector.done { background: #2d8a4e; }
+    .timeline-connector.active { background: linear-gradient(to bottom, #2d8a4e, var(--rojo)); }
+
+    .timeline-content {
+      padding: 0.75rem 0 1.5rem;
+    }
+
+    .timeline-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--marron);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-title.pending { color: var(--gris); }
+
+    .timeline-subtitle {
+      font-size: 0.82rem;
+      color: var(--gris);
+    }
+
+    .timeline-time {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--dorado);
+      margin-top: 0.25rem;
+    }
+
+    /* ORDER DETAIL */
+    .order-detail-card {
+      background: var(--blanco);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px var(--sombra);
+      margin-bottom: 2rem;
+    }
+
+    .order-detail-head {
+      padding: 1.25rem 1.5rem;
+      background: var(--marron);
+      color: var(--blanco);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .order-detail-body { padding: 1.25rem 1.5rem; }
+
+    .order-line {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      color: var(--gris);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--crema-dark);
+    }
+
+    .order-line:last-child { border-bottom: none; }
+    .order-line strong { color: var(--marron); font-weight: 700; }
+
+    .order-total-line {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--marron);
+      padding-top: 1rem;
+      border-top: 2px solid var(--crema-dark);
+      margin-top: 0.5rem;
+    }
+
+    .order-total-line span:last-child { color: var(--rojo); }
+
+    /* RIDER CARD */
+    .rider-card {
+      background: var(--blanco);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px var(--sombra);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .rider-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--gradiente-btn);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+      border: 3px solid var(--dorado);
+    }
+
+    .rider-info { flex: 1; }
+    .rider-name { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; color: var(--marron); }
+    .rider-sub  { font-size: 0.82rem; color: var(--gris); margin-top: 0.2rem; }
+
+    .rider-actions { display: flex; gap: 0.5rem; }
+
+    .btn-rider {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--crema-dark);
+      background: transparent;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      transition: var(--trans);
+    }
+
+    .btn-rider:hover { border-color: var(--rojo); background: rgba(176,28,46,0.05); }
+
+    /* DELIVERED STATE */
+    .delivered-banner {
+      background: linear-gradient(135deg, #2d8a4e, #1a5c33);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: var(--blanco);
+    }
+
+    .delivered-banner .big-check { font-size: 4rem; display: block; margin-bottom: 1rem; }
+    .delivered-banner h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .delivered-banner p  { opacity: 0.8; }
+
+    .rating-section {
+      background: var(--blanco);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 20px var(--sombra);
+      margin-bottom: 2rem;
+    }
+
+    .rating-section h3 { font-size: 1.2rem; color: var(--marron); margin-bottom: 1.5rem; }
+
+    .star-rating {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .star-btn {
+      font-size: 2.2rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      filter: grayscale(1) opacity(0.4);
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .star-btn.active { filter: none; transform: scale(1.2); }
+    .star-btn:hover  { filter: none; transform: scale(1.15); }
+
+    /* ANIMATIONS */
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-10px); }
+    }
+
+    @keyframes pulseRing {
+      0%   { box-shadow: 0 0 0 0 rgba(176,28,46,0.4); }
+      100% { box-shadow: 0 0 0 12px rgba(176,28,46,0); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="Logo">
+      <div class="nav-logo-text">
+        <span class="brand">Guacamayas</span>
+        <span class="sub">Querétaro · Delivery</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="menu.html">← Nuevo pedido</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="btn-cart" id="cartBtn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+    </div>
+  </nav>
+
+  <div class="tracking-page" id="trackingPage">
+    <!-- injected by JS -->
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    // ── DELIVERY SIMULATION ──────────────────────
+    const STEPS = [
+      { emoji: '✅', label: 'Pedido recibido',    sub: 'Tu orden ha sido confirmada',           done: true  },
+      { emoji: '👨‍🍳', label: 'En preparación',     sub: 'Estamos armando tu guacamaya con amor', done: false },
+      { emoji: '📦', label: 'Listo para envío',   sub: 'Tu pedido está empacado y listo',       done: false },
+      { emoji: '🏍️', label: 'En camino',           sub: 'Tu repartidor está en ruta',            done: false },
+      { emoji: '🏠', label: '¡Entregado!',         sub: '¡Disfruta tu guacamaya!',               done: false },
+    ];
+
+    const STATUS_MESSAGES = [
+      { emoji: '✅', label: 'Pedido Confirmado',  title: 'Pedido confirmado',          desc: 'Recibimos tu orden y ya la estamos procesando.' },
+      { emoji: '👨‍🍳', label: 'En Preparación',    title: 'Preparando tu guacamaya...',  desc: 'Nuestro equipo está armando tu pedido con ingredientes frescos.' },
+      { emoji: '📦', label: 'Empacando',          title: 'Empacando con cuidado',       desc: 'Tu pedido está listo y siendo empacado para mantener su frescura.' },
+      { emoji: '🏍️', label: 'En Camino',          title: '¡Tu repartidor está en ruta!', desc: 'Rodrigo está en su camino hacia tu dirección. ¡Ya casi llega!' },
+      { emoji: '🎉', label: '¡Entregado!',        title: '¡Tu guacamaya llegó!',        desc: '¡Buen provecho! Gracias por elegirnos.' },
+    ];
+
+    let currentStep = 0;
+    let etaSeconds = 30 * 60; // 30 min
+    let order = null;
+    let stepInterval, etaInterval;
+
+    function loadOrder() {
+      try { order = JSON.parse(localStorage.getItem('gcm_order')); } catch {}
+      if (!order) {
+        // Demo order if none exists
+        order = {
+          id: 'GCM-DEMO01',
+          items: [{ name: 'Guacamaya Clásica', qty: 2, price: 42, mods: ['Tamaño: mediana', 'Salsa: roja'] }],
+          subtotal: 84, shipping: 35, discount: 0, total: 119,
+          payment: 'cash', address: 'Av. López Mateos 456, Col. Centro',
+        };
+      }
+    }
+
+    function formatETA(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m}:${s.toString().padStart(2,'0')} min`;
+    }
+
+    function render() {
+      const page = document.getElementById('trackingPage');
+      const sm = STATUS_MESSAGES[currentStep];
+      const isDelivered = currentStep >= 4;
+
+      const stepsHtml = STEPS.map((step, i) => {
+        let dotClass = 'pending';
+        let connClass = '';
+        let titleClass = 'pending';
+
+        if (i < currentStep)       { dotClass = 'done'; connClass = 'done'; titleClass = ''; }
+        else if (i === currentStep) { dotClass = 'active'; connClass = 'active'; titleClass = ''; }
+
+        const isLast = i === STEPS.length - 1;
+        const connectorHtml = !isLast
+          ? `<div class="timeline-connector ${connClass}"></div>`
+          : '';
+
+        return `
+          <div class="timeline-step">
+            <div class="timeline-left">
+              <div class="timeline-dot ${dotClass}">${step.emoji}</div>
+              ${connectorHtml}
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title ${titleClass}">${step.label}</div>
+              <div class="timeline-subtitle">${step.sub}</div>
+              ${i < currentStep ? '<div class="timeline-time">✓ Completado</div>' : ''}
+              ${i === currentStep && !isDelivered ? '<div class="timeline-time">⏳ En progreso...</div>' : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const itemsHtml = order.items.map(item =>
+        `<div class="order-line">
+          <span>${item.name} ×${item.qty}</span>
+          <strong>$${item.price * item.qty}</strong>
+        </div>`
+      ).join('');
+
+      const riderHtml = currentStep >= 3 && !isDelivered ? `
+        <div class="rider-card">
+          <div class="rider-avatar">🏍️</div>
+          <div class="rider-info">
+            <div class="rider-name">Rodrigo M.</div>
+            <div class="rider-sub">⭐ 4.9 · 847 entregas · En camino</div>
+          </div>
+          <div class="rider-actions">
+            <button class="btn-rider" title="Llamar" onclick="showToast('Marcando al repartidor... 📞','info')">📞</button>
+            <button class="btn-rider" title="WhatsApp" onclick="showToast('Abriendo WhatsApp... 💬','info')">💬</button>
+          </div>
+        </div>
+      ` : '';
+
+      if (isDelivered) {
+        page.innerHTML = `
+          <div class="track-header">
+            <div class="order-id">Pedido # ${order.id}</div>
+            <h1>¡Gracias por tu <span>pedido</span>! 🌶️</h1>
+          </div>
+
+          <div class="delivered-banner">
+            <span class="big-check">🎉</span>
+            <h2>¡Tu Guacamaya llegó!</h2>
+            <p>Esperamos que disfrutes cada bocado. ¡Buen provecho!</p>
+          </div>
+
+          <div class="rating-section">
+            <h3>¿Cómo estuvo tu pedido?</h3>
+            <div class="star-rating">
+              ${[1,2,3,4,5].map(n => `<button class="star-btn" onclick="rateStar(${n})" id="star${n}">⭐</button>`).join('')}
+            </div>
+            <textarea class="form-control" placeholder="Cuéntanos tu experiencia (opcional)..." rows="3" style="margin-bottom:1rem"></textarea>
+            <button class="btn btn-primary" onclick="submitRating()">Enviar Reseña</button>
+          </div>
+
+          <div style="text-align:center;margin-top:2rem">
+            <a href="menu.html" class="btn btn-primary btn-lg">🌶️ Pedir de Nuevo</a>
+          </div>
+        `;
+
+        // Rating stars logic
+        window.currentRating = 0;
+        window.rateStar = function(n) {
+          window.currentRating = n;
+          [1,2,3,4,5].forEach(i => {
+            const el = document.getElementById(`star${i}`);
+            if (el) el.classList.toggle('active', i <= n);
+          });
+        };
+
+        window.submitRating = function() {
+          if (!window.currentRating) { showToast('Selecciona cuántas estrellas merece tu pedido ⭐', 'warning'); return; }
+          showToast(`¡Gracias por tu reseña de ${window.currentRating} ⭐! 🙏`, 'success');
+        };
+        return;
+      }
+
+      page.innerHTML = `
+        <div class="track-header">
+          <div class="order-id">Pedido # ${order.id}</div>
+          <h1>Siguiendo tu <span>Guacamaya</span> 🏍️</h1>
+        </div>
+
+        <div class="status-card">
+          <span class="status-emoji">${sm.emoji}</span>
+          <div class="status-label">${sm.label}</div>
+          <h2 class="status-title">${sm.title}</h2>
+          <p class="status-desc">${sm.desc}</p>
+          <div class="eta-badge">
+            ⏱️ Tiempo estimado: <span class="eta-countdown" id="etaDisplay">${formatETA(etaSeconds)}</span>
+          </div>
+        </div>
+
+        ${riderHtml}
+
+        <div class="progress-track">
+          <h3>Estado del pedido</h3>
+          <div class="steps-timeline">${stepsHtml}</div>
+        </div>
+
+        <div class="order-detail-card">
+          <div class="order-detail-head">
+            <span>Tu pedido</span>
+            <span>${order.id}</span>
+          </div>
+          <div class="order-detail-body">
+            ${itemsHtml}
+            <div class="order-line">
+              <span>Envío</span>
+              <strong style="color:var(--rojo)">$${order.shipping}</strong>
+            </div>
+            ${order.discount > 0 ? `<div class="order-line"><span>Descuento</span><strong style="color:#2d8a4e">-$${order.discount}</strong></div>` : ''}
+            <div class="order-total-line">
+              <span>Total pagado</span>
+              <span>$${order.total}</span>
+            </div>
+            <div style="margin-top:1rem;display:flex;gap:1rem;font-size:0.82rem;color:var(--gris);font-family:'Montserrat',sans-serif">
+              <span>📍 ${order.address}</span>
+              <span>|</span>
+              <span>💳 ${order.payment === 'cash' ? 'Efectivo' : order.payment === 'card' ? 'Tarjeta' : 'Transferencia'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center">
+          <button class="btn btn-secondary" onclick="cancelOrder()" style="font-size:0.82rem">
+            Cancelar pedido
+          </button>
+        </div>
+      `;
+
+      // Attach live countdown
+      const etaDisplay = document.getElementById('etaDisplay');
+      if (etaDisplay) etaDisplay.textContent = formatETA(etaSeconds);
+    }
+
+    function advanceStep() {
+      if (currentStep < STEPS.length - 1) {
+        currentStep++;
+        render();
+        if (currentStep === STEPS.length - 1) {
+          clearInterval(stepInterval);
+          clearInterval(etaInterval);
+          etaSeconds = 0;
+          showToast('🎉 ¡Tu guacamaya fue entregada! ¡Buen provecho!', 'success');
+        }
+      }
+    }
+
+    function cancelOrder() {
+      if (currentStep >= 3) {
+        showToast('Tu pedido ya está en camino, no puede cancelarse 🏍️', 'warning');
+        return;
+      }
+      if (confirm('¿Estás seguro de que deseas cancelar tu pedido?')) {
+        clearInterval(stepInterval);
+        clearInterval(etaInterval);
+        localStorage.removeItem('gcm_order');
+        showToast('Pedido cancelado 😢', 'warning');
+        setTimeout(() => { window.location.href = 'menu.html'; }, 1500);
+      }
+    }
+
+    // ── START SIMULATION ─────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      loadOrder();
+      render();
+
+      // Advance step every ~8 seconds (demo)
+      const STEP_DURATIONS = [5000, 8000, 6000, 10000]; // ms per step
+      let stepIdx = 0;
+
+      function scheduleNext() {
+        if (stepIdx < STEP_DURATIONS.length) {
+          setTimeout(() => {
+            advanceStep();
+            stepIdx++;
+            scheduleNext();
+          }, STEP_DURATIONS[stepIdx]);
+        }
+      }
+
+      scheduleNext();
+
+      // Countdown ticker
+      etaInterval = setInterval(() => {
+        if (etaSeconds > 0) {
+          etaSeconds -= 1;
+          const el = document.getElementById('etaDisplay');
+          if (el) el.textContent = formatETA(etaSeconds);
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

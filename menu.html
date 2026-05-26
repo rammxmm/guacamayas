@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú | Guacamayas Querétaro</title>
+  <meta name="description"
+    content="Explora el menú completo de Guacamayas Querétaro. Tortas de chicharrón artesanales, bebidas frescas y combos exclusivos.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/menu.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="Logo">
+      <div class="nav-logo-text">
+        <span class="brand">Guacamayas</span>
+        <span class="sub">Querétaro · Delivery</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="menu.html" class="active">Menú</a></li>
+      <li><a href="index.html#ubicacion">Ubicación</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="profile.html" class="snav-item" id="profileBtn" style="display:none;padding:0.45rem 0.875rem;border-radius:var(--radius-full);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);font-size:0.82rem;font-weight:700;gap:0.4rem;text-decoration:none;align-items:center;">👤 <span id="navUserName"></span></a>
+      <a href="cart.html" class="btn-cart" id="cartBtn" title="Mi pedido">
+        🛒 <span class="cart-badge" id="cartCount">0</span>
+      </a>
+      <a href="login.html" class="btn btn-secondary btn-sm" id="loginBtn">Entrar</a>
+    </div>
+  </nav>
+
+  <!-- MENU HERO -->
+  <section class="menu-hero">
+    <div class="menu-hero-bg"></div>
+    <div class="menu-hero-content">
+      <div class="badge badge-hot" style="margin-bottom:1rem">🌶️ Menú del Día</div>
+      <h1>Elige tu <span>Guacamaya</span></h1>
+      <p>Prepara a partir de ingredientes frescos del día. Personalízala a tu gusto.</p>
+    </div>
+  </section>
+
+  <!-- CATEGORY TABS -->
+  <div class="category-strip" id="categoryStrip">
+    <div class="category-tabs">
+      <button class="cat-tab active" onclick="filterCategory('all')" data-cat="all">
+        🌮 Todo
+      </button>
+      <button class="cat-tab" onclick="filterCategory('guacamayas')" data-cat="guacamayas">
+        🔥 Guacamayas
+      </button>
+      <button class="cat-tab" onclick="filterCategory('combos')" data-cat="combos">
+        🎁 Combos
+      </button>
+      <button class="cat-tab" onclick="filterCategory('bebidas')" data-cat="bebidas">
+        🥤 Bebidas
+      </button>
+      <button class="cat-tab" onclick="filterCategory('extras')" data-cat="extras">
+        ✨ Extras
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="menu-layout">
+
+    <!-- MENU ITEMS -->
+    <main class="menu-main" id="menuMain">
+
+      <!-- SECTION: GUACAMAYAS -->
+      <div class="menu-section" id="sec-guacamayas" data-section="guacamayas">
+        <div class="menu-section-header">
+          <h2>🔥 Guacamayas</h2>
+          <p>La auténtica torta de chicharrón leonesa, en sus diferentes presentaciones</p>
+        </div>
+        <div class="menu-grid" id="menuGrid">
+          <!-- Cards injected by JS -->
+        </div>
+      </div>
+
+      <!-- SECTION: COMBOS -->
+      <div class="menu-section" id="sec-combos" data-section="combos">
+        <div class="menu-section-header">
+          <h2>🎁 Combos</h2>
+          <p>Ahorra más con nuestras combinaciones perfectas</p>
+        </div>
+        <div class="menu-grid" id="combosGrid"></div>
+      </div>
+
+      <!-- SECTION: BEBIDAS -->
+      <div class="menu-section" id="sec-bebidas" data-section="bebidas">
+        <div class="menu-section-header">
+          <h2>🥤 Bebidas</h2>
+          <p>Aguas frescas, refrescos y más para acompañar tu guacamaya</p>
+        </div>
+        <div class="menu-grid" id="bebidasGrid"></div>
+      </div>
+
+      <!-- SECTION: EXTRAS -->
+      <div class="menu-section" id="sec-extras" data-section="extras">
+        <div class="menu-section-header">
+          <h2>✨ Extras</h2>
+          <p>Complementa tu pedido</p>
+        </div>
+        <div class="menu-grid" id="extrasGrid"></div>
+      </div>
+
+    </main>
+
+    <!-- CART SIDEBAR -->
+    <aside class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h3>🛒 Tu Pedido</h3>
+        <span class="cart-item-count" id="sidebarCount">0 items</span>
+      </div>
+
+      <div class="cart-items" id="cartItemsList">
+        <div class="cart-empty" id="cartEmpty">
+          <span>🌶️</span>
+          <p>Tu carrito está vacío</p>
+          <small>Agrega tu guacamaya favorita</small>
+        </div>
+      </div>
+
+      <div class="cart-summary" id="cartSummary" style="display:none">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="subtotalPrice">$0</span>
+        </div>
+        <div class="summary-row">
+          <span>Envío</span>
+          <span id="shippingPrice" style="color:var(--rojo)">$35</span>
+        </div>
+        <div class="summary-row" id="discountRow" style="display:none">
+          <span>Descuento</span>
+          <span id="discountPrice" style="color:#2d8a4e">-$0</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row summary-total">
+          <span>Total</span>
+          <span id="totalPrice">$35</span>
+        </div>
+
+        <div class="promo-section">
+          <input type="text" class="form-control" id="promoInput" placeholder="Código promo (ej: BIENVENIDO10)">
+          <button class="btn btn-secondary btn-sm" onclick="applyPromo()">Aplicar</button>
+        </div>
+
+        <div class="delivery-info">
+          <div class="delivery-eta">
+            <span class="eta-icon">⏱️</span>
+            <div>
+              <strong>Tiempo estimado</strong>
+              <span>25-35 minutos</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg" onclick="goToCheckout()">
+          Confirmar Pedido →
+        </button>
+
+        <button class="btn btn-sm" onclick="clearCart()"
+          style="width:100%;margin-top:0.5rem;color:var(--gris);background:none;font-size:0.8rem">
+          🗑 Vaciar carrito
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- CUSTOMIZER MODAL -->
+  <div class="modal-overlay" id="customizerModal">
+    <div class="modal" style="max-width:560px">
+      <button class="modal-close" onclick="closeCustomizer()">✕</button>
+      <div class="customizer-header" id="customizerHeader"></div>
+      <div class="customizer-body" id="customizerBody"></div>
+      <div class="customizer-footer">
+        <div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="custQty(-1)">−</button>
+            <span class="qty-num" id="custQtyNum">1</span>
+            <button class="qty-btn" onclick="custQty(1)">+</button>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addCustomized()" id="custAddBtn">
+          Agregar — <span id="custTotal">$0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/menu.js"></script>
+</body>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand">🌶️ Guacamayas Querétaro</div>
+      <p>La auténtica torta de chicharrón de Querétaro. Más de 30 años llevando el sabor queretano a tu mesa.</p>
+      <div class="social-links" style="margin-top:1.5rem">
+        <a href="#" title="Facebook">f</a>
+        <a href="#" title="Instagram">📷</a>
+        <a href="#" title="WhatsApp">💬</a>
+        <a href="#" title="TikTok">♪</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Menú</h5>
+      <ul>
+        <li><a href="menu.html">Guacamayas</a></li>
+        <li><a href="menu.html#bebidas">Bebidas</a></li>
+        <li><a href="menu.html#extras">Extras</a></li>
+        <li><a href="menu.html#combos">Combos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Empresa</h5>
+      <ul>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#ubicacion">Ubicación</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Atención</h5>
+      <ul>
+        <li><a href="tel:4421234567">442 123 4567</a></li>
+        <li><a href="mailto:hola@guacamayasqro.mx">hola@guacamayasqro.mx</a></li>
+        <li><a href="tracking.html">Rastrear pedido</a></li>
+        <li><a href="faq.html">Preguntas frecuentes</a></li>
+      </ul>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom">
+    <span>© 2024 Guacamayas Querétaro. Todos los derechos reservados.</span>
+    <span>Hecho por @pardetres.mx</span>
+  </div>
+</footer>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/app.js"></script>
+<script src="js/home.js"></script>
+</body>
+
+</html>

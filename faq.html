@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preguntas Frecuentes | Guacamayas Querétaro</title>
+  <meta name="description" content="Resuelve tus dudas sobre pedidos, entregas, pagos y más en Guacamayas Querétaro.">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: var(--blanco-soft); padding-top: 64px; }
+
+    .faq-hero {
+      background: var(--negro);
+      padding: 4rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .faq-hero .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(26,86,219,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--acento);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1.25rem;
+    }
+
+    .faq-hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      color: var(--blanco);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.03em;
+    }
+
+    .faq-hero h1 span { color: var(--azul-light); }
+
+    .faq-hero p {
+      color: rgba(255,255,255,0.55);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* SEARCH */
+    .faq-search-wrap {
+      max-width: 520px;
+      margin: 2rem auto 0;
+      position: relative;
+    }
+
+    .faq-search {
+      width: 100%;
+      padding: 0.875rem 1.25rem 0.875rem 3rem;
+      border-radius: var(--radius-full);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      color: var(--blanco);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--trans);
+    }
+
+    .faq-search::placeholder { color: rgba(255,255,255,0.35); }
+    .faq-search:focus { border-color: var(--azul-light); background: rgba(255,255,255,0.09); }
+
+    .faq-search-icon {
+      position: absolute;
+      left: 1.1rem; top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.35);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    /* MAIN */
+    .faq-page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* CATEGORY */
+    .faq-category { margin-bottom: 3rem; }
+
+    .faq-category-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--azul);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1.5px solid var(--gris-border);
+    }
+
+    /* ACCORDION */
+    .faq-item {
+      background: var(--blanco);
+      border: 1px solid var(--gris-border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+      transition: var(--trans);
+    }
+
+    .faq-item:hover { border-color: rgba(26,86,219,0.2); }
+    .faq-item.open  { border-color: rgba(26,86,219,0.3); box-shadow: var(--sombra-azul); }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: var(--negro);
+      transition: var(--trans);
+    }
+
+    .faq-question:hover { color: var(--azul); }
+
+    .faq-chevron {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--blanco-muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      transition: var(--trans);
+      color: var(--gris);
+    }
+
+    .faq-item.open .faq-chevron {
+      background: var(--azul);
+      color: var(--blanco);
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+      padding: 0 1.25rem;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+      padding: 0 1.25rem 1.25rem;
+    }
+
+    .faq-answer p {
+      font-size: 0.875rem;
+      color: var(--gris-dark);
+      line-height: 1.75;
+      border-top: 1px solid var(--gris-border);
+      padding-top: 1rem;
+    }
+
+    .faq-answer a { color: var(--azul); font-weight: 600; text-decoration: none; }
+    .faq-answer a:hover { text-decoration: underline; }
+
+    /* CTA */
+    .faq-cta {
+      background: var(--negro);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .faq-cta h2 { color: var(--blanco); font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .faq-cta p  { color: rgba(255,255,255,0.55); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .faq-cta-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 600px) {
+      .faq-page { padding: 2rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="Logo">
+      <div class="nav-logo-text">
+        <span class="brand">Guacamayas</span>
+        <span class="sub">Querétaro · Delivery</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="menu.html">Menú</a></li>
+      <li><a href="index.html#ubicacion">Ubicación</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="btn-cart" id="cartBtn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+      <a href="login.html" class="btn btn-secondary btn-sm" id="loginBtn">Entrar</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="faq-hero">
+    <div class="badge-pill">💬 Soporte</div>
+    <h1>Preguntas <span>Frecuentes</span></h1>
+    <p>Todo lo que necesitas saber sobre tus pedidos, entregas y más.</p>
+    <div class="faq-search-wrap">
+      <span class="faq-search-icon">🔍</span>
+      <input type="text" class="faq-search" id="faqSearch" placeholder="Buscar pregunta..." oninput="filterFaq(this.value)">
+    </div>
+  </div>
+
+  <div class="faq-page">
+
+    <!-- PEDIDOS -->
+    <div class="faq-category" data-cat>
+      <div class="faq-category-title">🛒 Pedidos</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Cómo hago un pedido?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Es muy sencillo: entra a nuestro <a href="menu.html">menú</a>, elige tu guacamaya favorita y personalízala a tu gusto. Agrégala al carrito, confirma tu dirección y el método de pago, y listo. Recibirás tu pedido en aproximadamente 30 minutos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Puedo modificar mi pedido después de confirmarlo?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Solo puedes modificar tu pedido si aún está en estado <strong>"Pendiente"</strong>. Una vez que empiece la preparación, ya no es posible hacer cambios. Contáctanos al <a href="tel:4421234567">442 123 4567</a> lo antes posible.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Puedo cancelar un pedido?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Sí, puedes cancelar tu pedido siempre que no haya comenzado su preparación. Ve a <a href="tracking.html">Rastrear pedido</a> y selecciona "Cancelar". Si el pedido ya está en preparación o en camino, no es posible cancelarlo.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Necesito crear una cuenta para pedir?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>No es obligatorio, pero te recomendamos <a href="register.html">crear una cuenta</a> para guardar tu historial de pedidos, direcciones favoritas y disfrutar de beneficios exclusivos para clientes registrados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTREGAS -->
+    <div class="faq-category" data-cat>
+      <div class="faq-category-title">🏍️ Entregas</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Cuánto tiempo tarda la entrega?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>El tiempo estimado de entrega es de <strong>25 a 35 minutos</strong> dependiendo de tu ubicación y la demanda del momento. Puedes rastrear tu pedido en tiempo real desde <a href="tracking.html">esta página</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿A qué zonas de Querétaro entregan?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Entregamos a toda la zona metropolitana de Querétaro incluyendo: Centro, Juriquilla, El Marqués, Corregidora, Santa Rosa Jáuregui y colonias aledañas. Si tienes duda sobre tu zona, escríbenos al <a href="mailto:hola@guacamayasqro.mx">hola@guacamayasqro.mx</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Cuánto cuesta el envío?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>El costo de envío es de <strong>$35 pesos</strong> para la mayoría de las zonas. El costo exacto se muestra en el carrito antes de confirmar tu pedido.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Cómo puedo rastrear mi pedido?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Una vez confirmado tu pedido, ve a <a href="tracking.html">Rastrear pedido</a>. Ahí verás el estado en tiempo real: confirmado, en preparación, en camino y entregado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGOS -->
+    <div class="faq-category" data-cat>
+      <div class="faq-category-title">💳 Pagos</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Qué métodos de pago aceptan?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Aceptamos <strong>efectivo</strong> al momento de la entrega, <strong>tarjeta de débito/crédito</strong> con terminal portátil, y <strong>transferencia bancaria</strong> (SPEI). Selecciona tu método preferido al hacer el pedido.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Es seguro pagar con tarjeta?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Sí. El cobro con tarjeta se realiza con la terminal portátil que lleva nuestro repartidor al momento de la entrega, por lo que nunca compartirás tus datos bancarios en línea.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Tienen cupones o descuentos?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Sí. Puedes ingresar tu código de descuento en el carrito antes de confirmar el pedido. Síguenos en redes sociales para enterarte de promociones exclusivas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTO -->
+    <div class="faq-category" data-cat>
+      <div class="faq-category-title">🌶️ Producto</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Los ingredientes son frescos?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>¡Absolutamente! Preparamos cada guacamaya al momento con ingredientes frescos del día. El chicharrón, el aguacate y los chiles se reponen varias veces al día para garantizar la mejor calidad.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Tienen opciones para personas con alergias?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>Nuestros productos contienen gluten (bolillo) y pueden tener trazas de otros alérgenos. Si tienes alguna alergia específica, contáctanos antes de hacer tu pedido al <a href="tel:4421234567">442 123 4567</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggle(this)">
+          ¿Puedo pedir sin picante?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <p>¡Claro! Al personalizar tu guacamaya puedes elegir el nivel de picante: sin salsa, suave, media o habanero. También puedes agregar instrucciones especiales en las notas del pedido.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="faq-cta">
+      <h2>¿No encontraste tu respuesta?</h2>
+      <p>Nuestro equipo está listo para ayudarte de lunes a domingo.</p>
+      <div class="faq-cta-btns">
+        <a href="tel:4421234567" class="btn btn-primary">📞 Llamar ahora</a>
+        <a href="mailto:hola@guacamayasqro.mx" class="btn btn-ghost">✉️ Enviar email</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">🌶️ Guacamayas Querétaro</div>
+        <p>La auténtica torta de chicharrón de Querétaro. Más de 30 años llevando el sabor queretano a tu mesa.</p>
+        <div class="social-links" style="margin-top:1.5rem">
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="WhatsApp">💬</a>
+          <a href="#" title="TikTok">♪</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Menú</h5>
+        <ul>
+          <li><a href="menu.html">Guacamayas</a></li>
+          <li><a href="menu.html#bebidas">Bebidas</a></li>
+          <li><a href="menu.html#extras">Extras</a></li>
+          <li><a href="menu.html#combos">Combos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="index.html#nosotros">Nosotros</a></li>
+          <li><a href="index.html#ubicacion">Ubicación</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Atención</h5>
+        <ul>
+          <li><a href="tel:4421234567">442 123 4567</a></li>
+          <li><a href="mailto:hola@guacamayasqro.mx">hola@guacamayasqro.mx</a></li>
+          <li><a href="tracking.html">Rastrear pedido</a></li>
+          <li><a href="faq.html">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <span>© 2024 Guacamayas Querétaro. Todos los derechos reservados.</span>
+      <span>Hecho por @pardetres.mx</span>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="js/app.js"></script>
+  <script>
+    function toggle(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    function filterFaq(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? '' : 'none';
+      });
+      document.querySelectorAll('.faq-category').forEach(cat => {
+        const visible = [...cat.querySelectorAll('.faq-item')].some(i => i.style.display !== 'none');
+        cat.style.display = visible ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guacamayas Querétaro | Delivery de Tortas de Chicharrón</title>
+  <meta name="description"
+    content="La mejor guacamaya de Querétaro. Torta de chicharrón 100% artesanal, entrega a domicilio en minutos. ¡Pide ya!">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="Guacamayas Querétaro Logo">
+      <div class="nav-logo-text">
+        <span class="brand">Guacamayas</span>
+        <span class="sub">Querétaro · Delivery</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="menu.html">Menú</a></li>
+      <li><a href="index.html#ubicacion">Ubicación</a></li>
+      <li><a href="index.html#nosotros">Nosotros</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="cart.html" class="btn-cart" id="cartBtn" title="Mi pedido">
+        🛒
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+      <a href="login.html" class="btn btn-secondary btn-sm" id="loginBtn">Iniciar Sesión</a>
+      <a href="menu.html" class="btn btn-primary btn-sm" id="orderBtn">Ordenar</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🔥 La #1 en Querétaro</div>
+      <h1 class="hero-title">
+        La Guacamaya<br>
+        <span class="hero-title-accent">Más Famosa</span><br>
+        de Querétaro
+      </h1>
+      <p class="hero-desc">
+        Torta de chicharrón artesanal con la receta original de Querétaro.
+        Sabor inigualable, ingredientes frescos, entrega en 30 minutos.
+      </p>
+      <div class="hero-actions">
+        <a href="menu.html" class="btn btn-primary btn-lg">
+          🌶️ Ordenar Ahora
+        </a>
+        <a href="#nosotros" class="btn btn-secondary btn-lg" style="color:#fff;border-color:rgba(255,255,255,0.5)">
+          Conocer Más
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">+5,000</span>
+          <span class="stat-label">Clientes felices</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">30 min</span>
+          <span class="stat-label">Tiempo de entrega</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">4.9 ⭐</span>
+          <span class="stat-label">Calificación</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <div class="hero-img-glow"></div>
+      <img src="img/hero.png" alt="Guacamaya Querétaro" class="hero-img">
+    </div>
+    <div class="scroll-hint">
+      <span>Desliza</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES STRIP -->
+  <section class="features-strip">
+    <div class="features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">🏠</span>
+        <div>
+          <h4>Delivery a Domicilio</h4>
+          <p>Llegamos a toda la ciudad de Querétaro</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">⚡</span>
+        <div>
+          <h4>Ultra Rápido</h4>
+          <p>Entrega garantizada en 30 minutos</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🌶️</span>
+        <div>
+          <h4>Receta Original</h4>
+          <p>La auténtica guacamaya queretana</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🔒</span>
+        <div>
+          <h4>Pago Seguro</h4>
+          <p>Efectivo o tarjeta al recibir</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS DESTACADOS -->
+  <section class="section products-section" id="productos">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nuestras <span>Especialidades</span></h2>
+        <div class="section-line"></div>
+        <p>Cada guacamaya preparada al momento con ingredientes frescos y la sazón que nos hace únicos.</p>
+      </div>
+
+      <div class="products-grid">
+
+        <div class="product-card card">
+          <div class="product-img-wrap">
+            <img src="img/guacamaya-classic.png" alt="Guacamaya Clásica">
+            <div class="product-img-overlay"></div>
+            <span class="badge badge-hot" style="position:absolute;top:1rem;left:1rem">🔥 Más Vendida</span>
+            <button class="btn-wishlist" title="Favorito">♡</button>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">Guacamaya Clásica</h3>
+            <p class="product-desc">Chicharrón prensado, salsa roja, aguacate y limón en bolillo artesanal</p>
+            <div class="product-meta">
+              <span class="stars">★★★★★</span>
+              <span class="meta-sep">·</span>
+              <span class="review-count">1,248 reseñas</span>
+            </div>
+            <div class="product-footer">
+              <div>
+                <span class="price-old">$48</span>
+                <span class="price" style="font-size:1.4rem">$42</span>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="addToCart('Guacamaya Clásica',42,1)">
+                + Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card card">
+          <div class="product-img-wrap">
+            <img src="img/guacamaya-especial.png" alt="Guacamaya Especial">
+            <div class="product-img-overlay"></div>
+            <span class="badge badge-new" style="position:absolute;top:1rem;left:1rem">✨ Especial</span>
+            <button class="btn-wishlist" title="Favorito">♡</button>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">Guacamaya Especial</h3>
+            <p class="product-desc">Doble chicharrón, extra salsa habanero, queso fresco, jalapeño y aguacate</p>
+            <div class="product-meta">
+              <span class="stars">★★★★★</span>
+              <span class="meta-sep">·</span>
+              <span class="review-count">876 reseñas</span>
+            </div>
+            <div class="product-footer">
+              <div>
+                <span class="price" style="font-size:1.4rem">$68</span>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="addToCart('Guacamaya Especial',68,2)">
+                + Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card card">
+          <div class="product-img-wrap">
+            <img src="img/drinks.png" alt="Bebidas">
+            <div class="product-img-overlay"></div>
+            <span class="badge badge-new" style="position:absolute;top:1rem;left:1rem;background:#1A6B9A;color:#fff">🥤
+              Bebidas</span>
+            <button class="btn-wishlist" title="Favorito">♡</button>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">Combo Guacamaya</h3>
+            <p class="product-desc">Guacamaya clásica + Agua fresca de Jamaica grande + Papas saladitas</p>
+            <div class="product-meta">
+              <span class="stars">★★★★☆</span>
+              <span class="meta-sep">·</span>
+              <span class="review-count">543 reseñas</span>
+            </div>
+            <div class="product-footer">
+              <div>
+                <span class="price-old">$82</span>
+                <span class="price" style="font-size:1.4rem">$69</span>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="addToCart('Combo Guacamaya',69,3)">
+                + Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:3rem">
+        <a href="menu.html" class="btn btn-secondary btn-lg">Ver Menú Completo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="section how-section" id="como">
+    <div class="container">
+      <div class="section-title">
+        <h2>¿Cómo <span>Funciona</span>?</h2>
+        <div class="section-line"></div>
+        <p>Pedir tu guacamaya favorita es muy sencillo</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">01</div>
+          <div class="step-icon">📱</div>
+          <h4>Elige tu Guacamaya</h4>
+          <p>Navega nuestro menú y personaliza tu pedido con tus ingredientes favoritos</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <div class="step-icon">🛒</div>
+          <h4>Confirma tu Pedido</h4>
+          <p>Revisa tu carrito, agrega bebidas y snacks, confirma tu dirección</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <div class="step-icon">🏍️</div>
+          <h4>Nosotros Entregamos</h4>
+          <p>Tu repartidor sale en minutos. Síguelo en tiempo real desde la app</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-number">04</div>
+          <div class="step-icon">😋</div>
+          <h4>¡Disfruta!</h4>
+          <p>Recibe tu guacamaya caliente y fresca en la puerta de tu casa</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section class="section about-section" id="nosotros">
+    <div class="container about-grid">
+      <div class="about-content">
+        <div class="badge badge-hot" style="margin-bottom:1.5rem">Nuestra Historia</div>
+        <h2>Más de 30 Años de<br><span style="color:var(--rojo)">Tradición Queretana</span></h2>
+        <p>La Guacamaya nació en las calles de Querétaro como el antojo favorito de los queretanos. Desde 1993,
+          preparamos cada torta con la receta original que nos heredaron nuestros abuelos: chicharrón crujiente, salsa
+          roja picante al gusto y aguacate fresco.</p>
+        <p style="margin-top:1rem">Hoy, llevamos ese mismo sabor tradicional directo a tu puerta, con el servicio de
+          delivery más rápido de la ciudad.</p>
+        <div class="about-badges">
+          <div class="about-badge">
+            <span class="badge-icon">🌶️</span>
+            <span>Ingredientes 100% frescos</span>
+          </div>
+          <div class="about-badge">
+            <span class="badge-icon">🏆</span>
+            <span>Premio al Mejor Sabor 2023</span>
+          </div>
+          <div class="about-badge">
+            <span class="badge-icon">♻️</span>
+            <span>Empaques eco-amigables</span>
+          </div>
+        </div>
+        <a href="menu.html" class="btn btn-primary" style="margin-top:2rem">Prueba Nuestra Guacamaya</a>
+      </div>
+      <div class="about-visual">
+        <div class="about-img-wrap">
+          <img src="img/guacamaya-especial.png" alt="Guacamaya Artesanal">
+          <div class="about-float-card">
+            <span class="about-float-icon">🏍️</span>
+            <div>
+              <strong>Entrega en Querétaro</strong>
+              <small>Toda la zona metropolitana</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UBICACIÓN -->
+  <section class="section location-section" id="ubicacion">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nuestra <span>Ubicación</span></h2>
+        <div class="section-line"></div>
+        <p>Visítanos o pídenos a domicilio, siempre estamos listos para atenderte</p>
+      </div>
+      <div class="location-grid">
+        <div class="location-info">
+          <div class="location-card">
+            <div class="loc-icon">📍</div>
+            <h4>Sucursal Principal</h4>
+            <p>Av. Constituyentes 456<br>Col. Centro, Querétaro, Qro. C.P. 76000</p>
+          </div>
+          <div class="location-card">
+            <div class="loc-icon">🕐</div>
+            <h4>Horarios</h4>
+            <p>Lunes – Viernes: 8:00 AM – 10:00 PM<br>Sábado – Domingo: 8:00 AM – 11:00 PM</p>
+          </div>
+          <div class="location-card">
+            <div class="loc-icon">📞</div>
+            <h4>Contacto</h4>
+            <p>442 123 4567<br>hola@guacamayasqro.mx</p>
+          </div>
+          <a href="menu.html" class="btn btn-primary btn-full" style="margin-top:1rem">
+            🛵 Pedir a Domicilio Ahora
+          </a>
+        </div>
+        <div class="map-container">
+          <div class="map-inner">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60406.32!2d-100.3899!3d20.5888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b2f5c5a77b7%3A0x1c2cc8e0e5d7a5a!2sQuer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx"
+              width="100%" height="100%" style="border:0;border-radius:16px" allowfullscreen loading="lazy">
+            </iframe>
+            <div class="map-pin-badge">🌶️ Estamos Aquí</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="section reviews-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Lo que dicen nuestros <span>Clientes</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card card">
+          <div class="review-header">
+            <div class="reviewer-avatar">MG</div>
+            <div>
+              <strong>María G.</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>"La mejor guacamaya que he probado en Querétaro. El chicharrón siempre viene crujiente y la salsa está en
+            su punto perfecto. ¡Pido 3 veces por semana!"</p>
+        </div>
+        <div class="review-card card">
+          <div class="review-header">
+            <div class="reviewer-avatar" style="background:var(--naranja)">JR</div>
+            <div>
+              <strong>Jorge R.</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>"Llegó en 25 minutos y caliente. Increíble servicio. La guacamaya especial es 🤤🔥. Ya no voy a ningún otro
+            lado."</p>
+        </div>
+        <div class="review-card card">
+          <div class="review-header">
+            <div class="reviewer-avatar" style="background:var(--dorado)">AL</div>
+            <div>
+              <strong>Ana L.</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>"El combo con agua de Jamaica es perfectísimo. La app funciona genial y puedo rastrear mi pedido.
+            Totalmente recomendado."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">🌶️ Guacamayas Querétaro</div>
+        <p>La auténtica torta de chicharrón de Querétaro. Más de 30 años llevando el sabor queretano a tu mesa.</p>
+        <div class="social-links" style="margin-top:1.5rem">
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="WhatsApp">💬</a>
+          <a href="#" title="TikTok">♪</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Menú</h5>
+        <ul>
+          <li><a href="menu.html">Guacamayas</a></li>
+          <li><a href="menu.html#bebidas">Bebidas</a></li>
+          <li><a href="menu.html#extras">Extras</a></li>
+          <li><a href="menu.html#combos">Combos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="index.html#nosotros">Nosotros</a></li>
+          <li><a href="index.html#ubicacion">Ubicación</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Atención</h5>
+        <ul>
+          <li><a href="tel:4421234567">442 123 4567</a></li>
+          <li><a href="mailto:hola@guacamayasqro.mx">hola@guacamayasqro.mx</a></li>
+          <li><a href="tracking.html">Rastrear pedido</a></li>
+          <li><a href="faq.html">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <span>© 2024 Guacamayas Querétaro. Todos los derechos reservados.</span>
+      <span>Hecho por @pardetres.mx</span>
+    </div>
+  </footer>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/home.js"></script>
+</body>
+
+</html>

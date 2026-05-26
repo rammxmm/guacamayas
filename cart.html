@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Pedido | Guacamayas Querétaro</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: var(--crema); padding-top: 70px; }
+
+    .cart-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .cart-page-header {
+      grid-column: 1 / -1;
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-page-header h1 {
+      font-size: 2rem;
+      color: var(--marron);
+    }
+
+    .cart-page-header p { color: var(--gris); }
+
+    /* ITEMS SECTION */
+    .order-items-section {
+      background: var(--blanco);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px var(--sombra);
+    }
+
+    .section-head {
+      padding: 1.25rem 1.75rem;
+      background: var(--marron);
+      color: var(--blanco);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .items-list { padding: 0.5rem 1.75rem; }
+
+    .order-item-row {
+      display: grid;
+      grid-template-columns: 60px 1fr auto auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--crema-dark);
+    }
+
+    .order-item-row:last-child { border-bottom: none; }
+
+    .order-item-img {
+      width: 60px; height: 60px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+    }
+
+    .order-item-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--marron);
+      margin-bottom: 0.2rem;
+    }
+
+    .order-item-mods {
+      font-size: 0.78rem;
+      color: var(--gris);
+    }
+
+    .order-item-unit {
+      font-size: 0.8rem;
+      color: var(--gris);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .order-item-total {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--rojo);
+    }
+
+    /* DELIVERY FORM */
+    .delivery-section {
+      background: var(--blanco);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px var(--sombra);
+      margin-top: 1.5rem;
+    }
+
+    .delivery-form { padding: 1.5rem 1.75rem; }
+
+    /* ORDER SUMMARY */
+    .order-summary-box {
+      background: var(--blanco);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 20px var(--sombra);
+      overflow: hidden;
+      position: sticky;
+      top: 90px;
+    }
+
+    .summary-body { padding: 1.5rem; }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      color: var(--gris);
+      margin-bottom: 0.75rem;
+    }
+
+    .summary-total {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--marron);
+    }
+
+    .summary-divider { height: 1px; background: var(--crema-dark); margin: 1rem 0; }
+
+    .promo-row { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .promo-row input { font-size: 0.82rem; padding: 0.6rem 1rem; }
+
+    .payment-methods { margin-bottom: 1.5rem; }
+    .payment-methods h5 { font-size: 0.82rem; font-family: 'Montserrat', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--marron); margin-bottom: 0.75rem; }
+
+    .pay-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--crema-dark);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+      transition: var(--trans);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--marron);
+    }
+
+    .pay-option:hover { border-color: var(--rojo); }
+    .pay-option.selected { border-color: var(--rojo); background: rgba(176,28,46,0.05); }
+    .pay-option input { accent-color: var(--rojo); }
+
+    .guarantee-badges {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 1rem;
+      border-top: 1px solid var(--crema-dark);
+      background: var(--crema);
+    }
+
+    .guarantee-badge {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    @media (max-width: 900px) {
+      .cart-page { grid-template-columns: 1fr; }
+      .cart-page-header { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="Logo">
+      <div class="nav-logo-text">
+        <span class="brand">Guacamayas</span>
+        <span class="sub">Querétaro · Delivery</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="menu.html">← Seguir comprando</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="btn-cart" id="cartBtn">🛒 <span class="cart-badge" id="cartCount">0</span></a>
+    </div>
+  </nav>
+
+  <div class="cart-page" id="cartPage">
+    <div class="cart-page-header">
+      <h1>🛒 Mi Pedido</h1>
+      <p>Revisa y confirma tu orden antes de proceder</p>
+    </div>
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <!-- ITEMS -->
+      <div class="order-items-section">
+        <div class="section-head">
+          <span>Tus productos</span>
+          <a href="menu.html" style="color:var(--dorado);font-size:0.8rem;text-decoration:none">+ Agregar más</a>
+        </div>
+        <div class="items-list" id="cartItemsList">
+          <!-- injected by JS -->
+        </div>
+      </div>
+
+      <!-- DELIVERY DETAILS -->
+      <div class="delivery-section">
+        <div class="section-head">📍 Dirección de entrega</div>
+        <div class="delivery-form">
+          <div class="form-group">
+            <label for="delivCalle">Calle y número</label>
+            <div class="input-icon-wrap">
+              <span class="icon">🏠</span>
+              <input type="text" id="delivCalle" class="form-control" placeholder="Ej. Av. López Mateos 456" required>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div class="form-group">
+              <label for="delivColonia">Colonia</label>
+              <input type="text" id="delivColonia" class="form-control" placeholder="Ej. Centro">
+            </div>
+            <div class="form-group">
+              <label for="delivCP">Código Postal</label>
+              <input type="text" id="delivCP" class="form-control" placeholder="37000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="delivRef">Referencias</label>
+            <input type="text" id="delivRef" class="form-control" placeholder="Ej. Casa azul, frente al OXXO">
+          </div>
+          <div class="form-group">
+            <label for="delivNota">Nota para el repartidor</label>
+            <textarea id="delivNota" class="form-control" rows="2" placeholder="Instrucciones especiales..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: SUMMARY -->
+    <div>
+      <div class="order-summary-box">
+        <div class="section-head">Resumen del pedido</div>
+        <div class="summary-body">
+
+          <div id="summaryRows"></div>
+
+          <div class="summary-divider"></div>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">$0</span>
+          </div>
+          <div class="summary-row">
+            <span>Costo de envío</span>
+            <span style="color:var(--rojo)" id="cartShipping">$35</span>
+          </div>
+          <div class="summary-row" id="cartDiscountRow" style="display:none">
+            <span>Descuento</span>
+            <span style="color:#2d8a4e" id="cartDiscount">-$0</span>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-row summary-total">
+            <span>Total a pagar</span>
+            <span id="cartTotal" style="color:var(--rojo)">$0</span>
+          </div>
+
+          <div class="promo-row" style="margin-top:1rem">
+            <input type="text" id="cartPromoInput" class="form-control" placeholder="Código de descuento">
+            <button class="btn btn-secondary btn-sm" onclick="applyCartPromo()">Aplicar</button>
+          </div>
+
+          <!-- PAYMENT -->
+          <div class="payment-methods">
+            <h5>Método de pago</h5>
+            <label class="pay-option selected" id="pay-cash">
+              <input type="radio" name="payment" value="cash" checked onchange="selectPayment('cash')">
+              💵 Efectivo al recibir
+            </label>
+            <label class="pay-option" id="pay-card">
+              <input type="radio" name="payment" value="card" onchange="selectPayment('card')">
+              💳 Tarjeta al recibir
+            </label>
+            <label class="pay-option" id="pay-transfer">
+              <input type="radio" name="payment" value="transfer" onchange="selectPayment('transfer')">
+              📲 Transferencia / SPEI
+            </label>
+          </div>
+
+          <button class="btn btn-primary btn-full btn-lg" onclick="placeOrder()">
+            🌶️ Confirmar Pedido
+          </button>
+
+          <p style="text-align:center;font-size:0.75rem;color:var(--gris);margin-top:0.75rem;font-family:'Montserrat',sans-serif">
+            Tiempo estimado de entrega: <strong>25-35 min</strong>
+          </p>
+        </div>
+
+        <div class="guarantee-badges">
+          <span class="guarantee-badge">🔒 Pago seguro</span>
+          <span class="guarantee-badge">⚡ Entrega rápida</span>
+          <span class="guarantee-badge">✅ Calidad garantizada</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    let cartPromoDiscount = 0;
+    let selectedPayment = 'cash';
+
+    function renderCartPage() {
+      const list = document.getElementById('cartItemsList');
+      const summaryRows = document.getElementById('summaryRows');
+
+      if (cart.length === 0) {
+        list.innerHTML = `
+          <div style="text-align:center;padding:3rem;color:var(--gris)">
+            <div style="font-size:3rem;margin-bottom:1rem">🛒</div>
+            <h3 style="font-family:'Montserrat',sans-serif;margin-bottom:0.5rem">Tu carrito está vacío</h3>
+            <a href="menu.html" class="btn btn-primary" style="margin-top:1rem">Ver Menú</a>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = '';
+      let summaryHtml = '';
+
+      const imgMap = {
+        'Guacamaya Clásica': 'img/guacamaya-classic.png',
+        'Guacamaya Especial': 'img/guacamaya-especial.png',
+        'Guacamaya Mini': 'img/guacamaya-classic.png',
+        'Guacamaya Xtra Picante': 'img/guacamaya-especial.png',
+      };
+
+      cart.forEach(item => {
+        const img = imgMap[item.name] || 'img/drinks.png';
+        const row = document.createElement('div');
+        row.className = 'order-item-row';
+        const modsHtml = item.mods && item.mods.length
+          ? `<div class="order-item-mods">${item.mods.join(' · ')}</div>`
+          : '';
+
+        row.innerHTML = `
+          <img class="order-item-img" src="${img}" alt="${item.name}">
+          <div>
+            <div class="order-item-name">${item.name}</div>
+            ${modsHtml}
+            <div class="order-item-unit">$${item.price} c/u</div>
+          </div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="cartPageAdj('${item.key}',-1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="cartPageAdj('${item.key}',1)">+</button>
+          </div>
+          <span class="order-item-total">$${item.price * item.qty}</span>
+        `;
+        list.appendChild(row);
+
+        summaryHtml += `
+          <div class="summary-row">
+            <span>${item.name} ×${item.qty}</span>
+            <span>$${item.price * item.qty}</span>
+          </div>
+        `;
+      });
+
+      if (summaryRows) summaryRows.innerHTML = summaryHtml;
+
+      const subtotal = getCartTotal();
+      const shipping = 35;
+      const total = subtotal + shipping - cartPromoDiscount;
+
+      document.getElementById('cartSubtotal').textContent = `$${subtotal}`;
+      document.getElementById('cartShipping').textContent = `$${shipping}`;
+      document.getElementById('cartTotal').textContent = `$${total}`;
+
+      const drow = document.getElementById('cartDiscountRow');
+      if (drow) {
+        drow.style.display = cartPromoDiscount > 0 ? 'flex' : 'none';
+        document.getElementById('cartDiscount').textContent = `-$${cartPromoDiscount}`;
+      }
+    }
+
+    function cartPageAdj(key, delta) {
+      updateQty(key, delta);
+      renderCartPage();
+    }
+
+    function applyCartPromo() {
+      const code = document.getElementById('cartPromoInput')?.value.trim().toUpperCase();
+      const PROMOS = { 'BIENVENIDO10': 0.10, 'GUACAMAYA15': 0.15, 'LEON20': 0.20 };
+      if (PROMOS[code]) {
+        cartPromoDiscount = Math.round(getCartTotal() * PROMOS[code]);
+        showToast(`🎉 Descuento del ${PROMOS[code]*100}% aplicado`, 'success');
+        renderCartPage();
+      } else {
+        showToast('Código de promo inválido ❌', 'error');
+      }
+    }
+
+    function selectPayment(method) {
+      selectedPayment = method;
+      document.querySelectorAll('.pay-option').forEach(el => el.classList.remove('selected'));
+      document.getElementById(`pay-${method}`)?.classList.add('selected');
+    }
+
+    async function placeOrder() {
+      if (!requireAuth()) return;
+      if (cart.length === 0) { showToast('Tu carrito está vacío 🛒', 'warning'); return; }
+
+      const calle = document.getElementById('delivCalle').value.trim();
+      if (!calle) { showToast('Ingresa tu dirección de entrega 📍', 'warning'); return; }
+
+      const btn = document.querySelector('[onclick="placeOrder()"]');
+      btn.innerHTML = '<span class="spinner"></span> Confirmando...';
+      btn.disabled = true;
+
+      const user = getCurrentUser();
+      const subtotal = getCartTotal();
+      const shipping = 35;
+      const total = subtotal + shipping - cartPromoDiscount;
+      const direccionEntrega = calle + ', ' + (document.getElementById('delivColonia').value || '') + ' ' + (document.getElementById('delivCP').value || '');
+
+      const payload = {
+        usuario_id:        user.id,
+        total:             total,
+        direccion_entrega: direccionEntrega,
+        items: cart.map(i => ({
+          nombre:   i.name,
+          cantidad: i.qty,
+          precio:   i.price
+        }))
+      };
+
+      try {
+        const res = await fetch('api/pedidos.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Guardar datos para la página de tracking
+          const order = {
+            id:        'GCM-' + data.pedido_id,
+            pedido_id: data.pedido_id,
+            items:     [...cart],
+            subtotal,
+            shipping,
+            discount:  cartPromoDiscount,
+            total,
+            payment:   selectedPayment,
+            address:   direccionEntrega,
+            note:      document.getElementById('delivNota').value,
+            timestamp: new Date().toISOString(),
+            status:    'confirmed',
+          };
+
+          localStorage.setItem('gcm_order', JSON.stringify(order));
+          cart = [];
+          saveCart();
+
+          showToast('¡Pedido confirmado! 🎉 Preparando tu guacamaya...', 'success');
+          setTimeout(() => { window.location.href = 'tracking.html'; }, 1800);
+        } else {
+          showToast(data.message || 'Error al confirmar pedido', 'error');
+          btn.innerHTML = '🌶️ Confirmar Pedido';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showToast('Error de conexión. Intenta de nuevo.', 'error');
+        btn.innerHTML = '🌶️ Confirmar Pedido';
+        btn.disabled = false;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCartPage();
+    });
+  </script>
+</body>
+</html>
