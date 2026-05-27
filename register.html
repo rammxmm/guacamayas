@@ -6,191 +6,6 @@
   <title>Crear Cuenta | Guacamayas Querétaro</title>
   <meta name="description" content="Crea tu cuenta en Guacamayas Querétaro y empieza a pedir la mejor torta de chicharrón de Querétaro.">
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: stretch;
-      background: var(--marron);
-    }
-
-    .auth-split {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      width: 100%;
-      min-height: 100vh;
-    }
-
-    .auth-visual {
-      position: relative;
-      overflow: hidden;
-      background: var(--gradiente-hero);
-    }
-
-    .auth-visual-bg {
-      position: absolute;
-      inset: 0;
-      background: url('img/guacamaya-especial.png') center/cover no-repeat;
-      filter: brightness(0.3) saturate(1.2);
-    }
-
-    .auth-visual-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(200,134,10,0.5) 0%, rgba(44,18,8,0.85) 100%);
-    }
-
-    .auth-visual-content {
-      position: relative;
-      z-index: 2;
-      padding: 3rem;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .auth-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-    }
-
-    .auth-brand img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--dorado); object-fit: cover; }
-    .auth-brand-text .name { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--blanco); display: block; }
-    .auth-brand-text .city { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 3px; color: var(--dorado); text-transform: uppercase; }
-
-    .auth-tagline { padding: 3rem 0; }
-    .auth-tagline h1 { font-size: clamp(2rem, 4vw, 3rem); color: var(--blanco); line-height: 1.1; margin-bottom: 1.5rem; }
-    .auth-tagline h1 span { color: var(--dorado); }
-    .auth-tagline p { color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.7; max-width: 380px; }
-
-    .promo-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .promo-card .promo-label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      color: var(--dorado);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .promo-card h3 { color: var(--blanco); font-size: 1.1rem; margin-bottom: 0.25rem; font-family: 'Montserrat', sans-serif; }
-    .promo-card p { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
-
-    .auth-form-panel {
-      background: var(--crema);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 2rem;
-      overflow-y: auto;
-    }
-
-    .auth-form-box {
-      width: 100%;
-      max-width: 460px;
-      animation: fadeInUp 0.5s ease both;
-    }
-
-    .auth-form-header { margin-bottom: 2rem; }
-    .auth-form-header h2 { font-size: 2rem; color: var(--marron); margin-bottom: 0.5rem; }
-    .auth-form-header p { color: var(--gris); font-size: 0.95rem; }
-    .auth-form-header p a { color: var(--rojo); font-weight: 700; text-decoration: none; }
-    .auth-form-header p a:hover { text-decoration: underline; }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .password-strength {
-      margin-top: 0.5rem;
-      height: 4px;
-      background: var(--crema-dark);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .password-strength-bar {
-      height: 100%;
-      border-radius: 2px;
-      transition: var(--trans);
-      width: 0%;
-    }
-
-    .strength-weak   { background: #e74c3c; width: 33%; }
-    .strength-medium { background: var(--dorado); width: 66%; }
-    .strength-strong { background: #2d8a4e; width: 100%; }
-
-    .strength-label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.75rem;
-      margin-top: 0.25rem;
-    }
-
-    .terms-check {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .terms-check input {
-      width: 18px; height: 18px;
-      flex-shrink: 0;
-      accent-color: var(--rojo);
-      margin-top: 3px;
-      cursor: pointer;
-    }
-
-    .terms-check label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.83rem;
-      color: var(--gris);
-      cursor: pointer;
-      line-height: 1.5;
-    }
-
-    .terms-check label a { color: var(--rojo); text-decoration: none; font-weight: 600; }
-
-    .step-indicator {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .step-dot {
-      flex: 1;
-      height: 4px;
-      border-radius: 2px;
-      background: var(--crema-dark);
-      transition: var(--trans);
-    }
-
-    .step-dot.active { background: var(--rojo); }
-    .step-dot.done   { background: #2d8a4e; }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      .auth-split { grid-template-columns: 1fr; }
-      .auth-visual { display: none; }
-      .form-row { grid-template-columns: 1fr; }
-    }
-  </style>
 </head>
 <body>
 
@@ -280,15 +95,15 @@
 
           <div class="form-group">
             <label for="passwordReg">Contraseña</label>
-            <div class="input-icon-wrap" style="position:relative">
+            <div class="input-icon-wrap">
               <span class="icon">🔒</span>
               <input type="password" id="passwordReg" class="form-control" placeholder="Mínimo 8 caracteres" required oninput="checkStrength(this.value)">
-              <button type="button" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gris);font-size:1.1rem" onclick="togglePass('passwordReg')">👁</button>
+              <button type="button" class="password-toggle" onclick="togglePass('passwordReg')">👁</button>
             </div>
             <div class="password-strength">
               <div class="password-strength-bar" id="strengthBar"></div>
             </div>
-            <span class="strength-label" id="strengthLabel" style="color:var(--gris)"></span>
+            <span class="strength-label" id="strengthLabel"></span>
           </div>
 
           <div class="form-group">

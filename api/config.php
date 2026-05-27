@@ -6,7 +6,7 @@
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'gcmayas_db');      // Tu base de datos
 define('DB_USER', 'gcmayas_user');    // Tu usuario MySQL
-define('DB_PASS', 'TU_PASSWORD_AQUI'); // La contraseña que guardaste
+define('DB_PASS', 'PnQqkWC*Ef*IQNjA');
 
 // Cabeceras CORS para permitir peticiones desde el frontend
 header('Content-Type: application/json; charset=utf-8');
