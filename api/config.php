@@ -2,7 +2,7 @@
 // =============================================
 // CONFIGURACIÓN DE BASE DE DATOS
 // =============================================
-//  CAMBIA ESTOS VALORES CON LOS DE TU GODADDY
+//  C
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'gcmayas_db');      // Tu base de datos
 define('DB_USER', 'gcmayas_user');    // Tu usuario MySQL
